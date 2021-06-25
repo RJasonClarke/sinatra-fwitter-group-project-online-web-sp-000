@@ -6,6 +6,7 @@ class UsersController < ApplicationController
   end
 
 get "/signup" do
+
   if !logged_in?
     erb :'users/signup', locals: {message: "Please sign up before you sign in"}
   else
@@ -29,11 +30,19 @@ post '/login' do
   else
     redirect to '/signup'
   end
+  erb :"users/signup"
+  redirect "/"
+end
+
+get "/login" do
+  erb :"users/login"
+
 end
 
 post "/signup" do
   if params[:username] == "" || params[:email] == "" || params[:password] == ""
     redirect "/signup"
+
   else
     @user = User.new(:username => params[:username], :email => params[:email], :password => params[:password])
     @user.save
@@ -51,4 +60,4 @@ get '/logout' do
     end
   end
 
-end
+  end
